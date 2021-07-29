@@ -1,33 +1,55 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { Switch, Route } from 'react-router-dom'
+import Login from './components/Login'
+import { auth } from './firebaseConfig'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './actions/index'
-import { auth, provider } from './firebaseConfig'
-function App() {
-  const user = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-  // console.log(user)
+import LinearProgress from '@material-ui/core/LinearProgress';
 
+function App() {
+
+  const user = useSelector((store) => store.user)
+  const dispatch = useDispatch()
+
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    dispatch(setUser("bhuvan"))
-    console.log(user)
-    // eslint-disable-next-line
-  }, [])
+    setLoading(true)
+    let unSubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        const loggedUser = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        }
+        dispatch(setUser(loggedUser))
+      } else {
+        dispatch(setUser(null))
+      }
+      setLoading(false)
 
-  const login = () => {
-    auth.signInWithPopup(provider).catch((err) => alert(err.message))
-  }
+    })
+    return unSubscribe
+  }, [dispatch])
 
-  const handleClick = () => {
-    // console.log('mani')
-    dispatch(setUser("mani"))
-  }
   return (
-    <>
-      <h1>Hello World!....{user}</h1>
-      <button onClick={handleClick}>Change user</button>
-      <button onClick={login}>Log in with google.</button>
-    </>
+    <div className="app">
+      {loading && <LinearProgress />}
+      {!loading && !user && <Login />}
+      {
+        user && (
+          <>
+            <Switch>
+              <Route path='/' exact>
+
+              </Route>
+            </Switch>
+          </>
+        )
+      }
+    </div>
+
   );
 }
 
