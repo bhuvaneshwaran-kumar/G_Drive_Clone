@@ -1,13 +1,7 @@
-import { useEffect } from 'react'
 import { Button } from '@material-ui/core'
 import { auth, provider } from '../firebaseConfig'
-import LinearProgress from '@material-ui/core/LinearProgress';
-
 
 function Login() {
-
-
-
     const login = () => {
         auth.signInWithPopup(provider).catch(err => alert(err))
     }

@@ -5,7 +5,7 @@ import { auth } from './firebaseConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './actions/index'
 import LinearProgress from '@material-ui/core/LinearProgress';
-
+import Nav from './components/Nav'
 function App() {
 
   const user = useSelector((store) => store.user)
@@ -40,6 +40,7 @@ function App() {
       {
         user && (
           <>
+          <Nav/>
             <Switch>
               <Route path='/' exact>
 
