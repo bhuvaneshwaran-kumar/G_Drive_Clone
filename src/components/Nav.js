@@ -8,9 +8,10 @@ import PublishIcon from '@material-ui/icons/Publish'
 import { auth } from '../firebaseConfig'
 import { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function Nav() {
-
+    const user = useSelector((state) => state.user)
     const fileRef = useRef()
     const history = useHistory()
     const [uploadMessage, setUploadMessage] = useState(null)
@@ -23,7 +24,7 @@ function Nav() {
     //handle's image upload's and some validation.
     const handleUploadImage = () => {
         const photos = fileRef.current.files
-        if (photos.length == 0) return alert('No photos selected')
+        if (photos.length === 0) return alert('No photos selected')
         if (photos.length > 3) return alert('only 3 images can be uploaded. ')
         for (let photo of photos) {
             if (!photo.type.startsWith('image')) {
@@ -72,7 +73,9 @@ function Nav() {
 
                 <Tooltip title="Logout" arrow>
                     <IconButton onClick={logOut}>
-                        <Avatar className="nav__rightAvatar"></Avatar>
+                        <Avatar className="nav__rightAvatar"
+                            src={user?.photoURL}
+                        ></Avatar>
                     </IconButton>
                 </Tooltip>
             </div>

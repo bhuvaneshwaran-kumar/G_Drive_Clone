@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './actions/index'
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Nav from './components/Nav'
+import HomePage from './pages/HomePage'
 function App() {
 
   const user = useSelector((store) => store.user)
@@ -43,7 +44,7 @@ function App() {
           <Nav/>
             <Switch>
               <Route path='/' exact>
-
+                <HomePage/>
               </Route>
             </Switch>
           </>
