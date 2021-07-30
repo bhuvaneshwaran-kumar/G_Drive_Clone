@@ -3,9 +3,11 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, T
 
 function CreateAlbumModal({ isCreateAlbumOpen, setIsCreateAlbumOpen }) {
     const inputRef = useRef()
-    const [err, setErr] = useState(false)
-    const handleSubmit = () => {
-
+    const [error, setError] = useState(false)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const albumName = inputRef.current.value
+        if (albumName.length > 16 || albumName.length < 1) return setError(true)
     }
     const handleClose = () => {
         setIsCreateAlbumOpen(false)
@@ -24,7 +26,8 @@ function CreateAlbumModal({ isCreateAlbumOpen, setIsCreateAlbumOpen }) {
 
                         <div>
                             <TextField
-                                error={err}
+                                onChange={() => setError(false)}
+                                error={error}
                                 label='Album Name'
                                 margin='dense'
                                 autoFocus
@@ -41,8 +44,8 @@ function CreateAlbumModal({ isCreateAlbumOpen, setIsCreateAlbumOpen }) {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button color='secondary'>Cancel</Button>
-                        <Button color='primary'>Create</Button>
+                        <Button color='secondary' onClick={handleClose}>Cancel</Button>
+                        <Button color='primary' onClick={handleSubmit}>Create</Button>
                     </DialogActions>
                 </form>
             </Dialog>
