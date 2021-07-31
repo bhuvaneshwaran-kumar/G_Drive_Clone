@@ -6,6 +6,8 @@ import "../css/HomePage.css"
 import useFireStore from '../hooks/useFirestore'
 import { setCurrentAlbum } from '../actions'
 import Album from '../components/Album'
+import Photo from '../components/Photo'
+
 import { useDispatch, useSelector } from 'react-redux'
 function HomePage() {
 
@@ -73,6 +75,12 @@ function HomePage() {
                 {
                     albums.map(({ id, data }) => (
                         <Album id={id} key={id} data={data} />
+                    ))
+                }
+
+                {
+                    images && images.map(({ id, data }) => (
+                        <Photo id={id} key={id} data={data} />
                     ))
                 }
             </div>
