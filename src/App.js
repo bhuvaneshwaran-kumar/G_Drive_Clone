@@ -10,6 +10,12 @@ import HomePage from './pages/HomePage'
 function App() {
 
   const user = useSelector((store) => store.user)
+  const currentAlbum = useSelector((store) => store.album)
+
+  useEffect(() => {
+    console.log(currentAlbum.albumData?.name || currentAlbum.albumName, 'is a current Album')
+  }, [currentAlbum])
+
   const dispatch = useDispatch()
 
   const [loading, setLoading] = useState(true)
@@ -41,10 +47,10 @@ function App() {
       {
         user && (
           <>
-          <Nav/>
+            <Nav />
             <Switch>
               <Route path='/' exact>
-                <HomePage/>
+                <HomePage />
               </Route>
             </Switch>
           </>

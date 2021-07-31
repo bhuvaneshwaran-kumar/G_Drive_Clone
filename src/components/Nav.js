@@ -9,8 +9,9 @@ import { auth } from '../firebaseConfig'
 import { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
+import useFirestore from '../hooks/useFirestore'
 function Nav() {
+    const { uploadImages } = useFirestore()
     const user = useSelector((state) => state.user)
     const fileRef = useRef()
     const history = useHistory()
@@ -32,6 +33,7 @@ function Nav() {
             }
         }
 
+        uploadImages(photos)
         setUploadMessage(`Uploading ${photos.length} photos`)
         console.log('uploading images.')
 

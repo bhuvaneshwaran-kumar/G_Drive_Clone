@@ -4,32 +4,62 @@ import React, { useEffect, useState } from 'react'
 import CreateAlbumModal from '../components/CreateAlbumModal'
 import "../css/HomePage.css"
 import useFireStore from '../hooks/useFirestore'
+import { setCurrentAlbum } from '../actions'
+import Album from '../components/Album'
+import { useDispatch, useSelector } from 'react-redux'
 function HomePage() {
-    const { getAlbums } = useFireStore()
+
+    //React Redux dispatch
+    const dispatch = useDispatch()
+    const { albumName } = useSelector(state => state.album)
+
+    const { getAlbums, getAlbumPhotos } = useFireStore()
     const [isCreateAlbumOpen, setIsCreateAlbumOpen] = useState(false)
 
     const [albums, setAlbums] = useState([])
-
+    const [images, setImages] = useState([])
 
 
     const handleCreateAlbum = () => {
         setIsCreateAlbumOpen(true)
     }
 
-
+    //Sets the react store CurrentAlbum state to ROOT after mounting the component.
     useEffect(() => {
-        const unsubscribe = getAlbums().
-            onSnapshot(snapshot => {
-                setAlbums(
-                    snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        data: doc.data()
-                    }))
-                )
+        dispatch(
+            setCurrentAlbum({
+                albumId: 'ROOT',
+                albumName: 'ROOT'
             })
+        )
+    }, [dispatch])
+
+
+    // gets the user's album data.
+    useEffect(() => {
+        const unsubscribe = getAlbums().onSnapshot(snapshot => {
+            setAlbums(
+                snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    data: doc.data()
+                }))
+            )
+        })
+        return unsubscribe
+        // eslint-disable-next-line
+    }, [])
+
+
+    // gets the user's ROOT Album photos.
+    useEffect(() => {
+        console.log(albumName)
+        let unsubscribe = getAlbumPhotos().onSnapshot(snap => {
+            console.log(snap.docs)
+        })
         return unsubscribe
     }, [])
 
+    console.log(albumName, 'albumName')
 
 
     return (
@@ -42,10 +72,8 @@ function HomePage() {
                 </div>
                 {/* display's user's Album's 😍 */}
                 {
-                    albums.map(album => (
-                        <div onClick={handleCreateAlbum} className="homepage__photoAlbum" style={{ backgroundColor: '#D0D0D0' }}>
-                            <AddIcon fontSize='large' />
-                        </div>
+                    albums.map(({ id, data }) => (
+                        <Album id={id} key={id} data={data} />
                     ))
                 }
             </div>
