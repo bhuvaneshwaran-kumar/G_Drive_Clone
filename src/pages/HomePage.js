@@ -52,15 +52,14 @@ function HomePage() {
 
     // gets the user's ROOT Album photos.
     useEffect(() => {
-        console.log(albumName)
         let unsubscribe = getAlbumPhotos().onSnapshot(snap => {
-            console.log(snap.docs)
+            setImages(snap.docs.map((doc) => ({
+                id: doc.id,
+                data: doc.data()
+            })))
         })
         return unsubscribe
-    }, [])
-
-    console.log(albumName, 'albumName')
-
+    }, [albumName])
 
     return (
         <div className="homepage">
