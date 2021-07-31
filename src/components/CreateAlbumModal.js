@@ -1,13 +1,23 @@
 import { useRef, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, Typography } from '@material-ui/core';
-
+import useFireStore from '../hooks/useFirestore'
 function CreateAlbumModal({ isCreateAlbumOpen, setIsCreateAlbumOpen }) {
+    const { createAlbum } = useFireStore() //customHook to create a album.
     const inputRef = useRef()
     const [error, setError] = useState(false)
     const handleSubmit = (e) => {
         e.preventDefault()
         const albumName = inputRef.current.value
         if (albumName.length > 16 || albumName.length < 1) return setError(true)
+        try {
+            createAlbum(albumName)
+            console.log(`${albumName} is created successfully`)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setIsCreateAlbumOpen(false)
+        }
+
     }
     const handleClose = () => {
         setIsCreateAlbumOpen(false)
