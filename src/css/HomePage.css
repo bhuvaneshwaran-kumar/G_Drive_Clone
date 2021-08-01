@@ -1,6 +1,15 @@
-.homepage {
+.homepage,
+.albumpage {
   padding: 0.5rem 1rem;
 }
+
+.albumpage__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+}
+
 .homepage__albums {
   display: grid;
   /* grid-template-columns: repeat(5, 1fr); */
@@ -12,7 +21,8 @@
   border-bottom: 1px solid lightgray;
 }
 
-.homepage__photos {
+.homepage__photos,
+.albumpage__photos {
   display: grid;
   /* grid-template-columns: repeat(5, 1fr); */
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -24,6 +34,7 @@
 }
 
 .homepage__photoAlbum {
+  transition: all 500ms ease-in-out;
   background-color: rgba(235, 235, 235);
   width: 100%;
   height: 100%;
@@ -46,7 +57,8 @@
 }
 
 @media (max-width: 600px) {
-  .homepage__photos {
+  .homepage__photos,
+  .albumpage__photos {
     grid-template-columns: 1fr;
   }
 }

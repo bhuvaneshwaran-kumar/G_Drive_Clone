@@ -7,6 +7,9 @@ import { setUser } from './actions/index'
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Nav from './components/Nav'
 import HomePage from './pages/HomePage'
+import AlbumPage from './pages/AlbumPage'
+import { ROOT_RELATIVE } from 'relateurl'
+
 function App() {
 
   const user = useSelector((store) => store.user)
@@ -51,6 +54,9 @@ function App() {
             <Switch>
               <Route path='/' exact>
                 <HomePage />
+              </Route>
+              <Route path='/album/:albumName' >
+                <AlbumPage />
               </Route>
             </Switch>
           </>
