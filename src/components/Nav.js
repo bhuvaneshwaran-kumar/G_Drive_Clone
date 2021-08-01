@@ -33,7 +33,7 @@ function Nav() {
             }
         }
 
-        uploadImages(photos)
+        uploadImages(photos, setUploadMessage)
         setUploadMessage(`Uploading ${photos.length} photos`)
         console.log('uploading images.')
 

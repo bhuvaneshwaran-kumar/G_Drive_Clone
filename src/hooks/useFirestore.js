@@ -8,7 +8,7 @@ function useFireStore() {
     const { albumId, albumName } = useSelector((state) => state.album)
 
     //upload's Images.
-    const uploadImages = (imageFiles) => {
+    const uploadImages = (imageFiles, setUploadMessage) => {
         for (let imageFile of imageFiles) {
             const photoId = uuidv4()
 
@@ -39,7 +39,8 @@ function useFireStore() {
                         .then(downloadImageUrl => {
                             imageData.photoURL = downloadImageUrl // append the image URL to the imageData
                             console.table(imageData)
-                            db.collection('photos').doc(photoId).set(imageData) // add the image data to store. 
+                            db.collection('photos').doc(photoId).set(imageData) // add the image data to store.
+                            setUploadMessage(`successfully uploaded ${imageData.name}`)
                         })
                 }
             )
@@ -91,7 +92,6 @@ function useFireStore() {
                 .delete()
                 .then(() => db.collection('photos').doc(photo.id).delete())
         }
-
         db.collection('albums').doc(albumId).delete()
     }
 
