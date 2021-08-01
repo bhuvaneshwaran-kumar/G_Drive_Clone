@@ -61,12 +61,12 @@ function HomePage() {
             })))
         })
         return unsubscribe
-    }, [albumName])
+    }, [albumName, getAlbumPhotos])
 
     return (
         <div className="homepage">
             <Typography variant="h5">Albums</Typography>
-            <div className="homepage__photos">
+            <div className="homepage__albums">
                 {/* Create Album */}
                 <div onClick={handleCreateAlbum} className="homepage__photoAlbum" style={{ backgroundColor: '#D0D0D0' }}>
                     <AddIcon fontSize='large' />
@@ -77,14 +77,17 @@ function HomePage() {
                         <Album id={id} key={id} data={data} />
                     ))
                 }
+                <br />
+            </div>
 
+            {/* Root Directory Photos */}
+            <div className='homepage__photos'>
                 {
                     images && images.map(({ id, data }) => (
                         <Photo id={id} key={id} data={data} />
                     ))
                 }
             </div>
-
 
             <CreateAlbumModal isCreateAlbumOpen={isCreateAlbumOpen} setIsCreateAlbumOpen={setIsCreateAlbumOpen} />
         </div>
