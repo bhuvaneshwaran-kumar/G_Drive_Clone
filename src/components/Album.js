@@ -1,20 +1,20 @@
-import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
 import { Typography } from '@material-ui/core'
-import { useDispatch } from 'react-redux'
-import {setCurrentAlbum} from '../actions/index'
-import { useHistory } from 'react-router-dom'
+
+import { setCurrentAlbum } from '../actions/index' //action Creater.
 function Album({ id, data }) {
 
     const dispatch = useDispatch()
     const history = useHistory()
 
     // changes the redux store album state.
-    const handleAlbumClick = ()=>{
+    const handleAlbumClick = () => {
         dispatch(
             setCurrentAlbum({
-                albumId:id,
-                albumName:data.name
+                albumId: id,
+                albumName: data.name
             })
         )
         history.push(`/album/${data.name}`)
@@ -22,7 +22,7 @@ function Album({ id, data }) {
 
     return (
         <div className='homepage__photoAlbum' onClick={handleAlbumClick}>
-            <PhotoLibraryIcon/>
+            <PhotoLibraryIcon />
             <Typography variant='h6'>{data.name}</Typography>
         </div>
     )

@@ -1,23 +1,34 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { Typography, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, IconButton, Button } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { useSelector } from 'react-redux'
-import { useState, useEffect } from 'react'
-import Photo from '../components/Photo'
+
+import { Photo } from '../components'
 import useFireStore from '../hooks/useFirestore'
-import { useHistory } from 'react-router-dom'
 import '../css/HomePage.css'
+
 function AlbumPage() {
     const history = useHistory()
-    const { albumName } = useSelector((state) => state.album)
+    const [images, setImages] = useState([])
     const [open, setOpen] = useState(false)
 
-
+    const { albumName } = useSelector((state) => state.album)
     const { getAlbumPhotos, deleteAlbum } = useFireStore()
 
-    const [images, setImages] = useState([])
+    // Utility functions Delete Modal.
+    const closeDeleteModal = () => setOpen(false)
+    const openDeleteModal = () => setOpen(true)
 
-    // gets the user's ROOT Album photos.
+    const handleDeleteAlbum = () => {
+        console.log('deleting Album Photos...')
+        deleteAlbum(images)
+        closeDeleteModal()
+        history.replace('/')
+    }
+
+
+    // gets the user's Current Album photos. current album value will be stored in redux store.
     useEffect(() => {
         let unsubscribe = getAlbumPhotos().onSnapshot(snap => {
             let data = snap.docs.map((doc) => ({
@@ -36,18 +47,9 @@ function AlbumPage() {
         }
     }, [])
 
-    const closeDeleteModal = () => setOpen(false)
-    const openDeleteModal = () => setOpen(true)
-
-    const handleDeleteAlbum = () => {
-        console.log('deleting Album Photos...')
-        deleteAlbum(images)
-        closeDeleteModal()
-        history.replace('/')
-    }
-
     return (
         <div className='albumpage'>
+            {/* Albumpage Header.*/}
             <div className='albumpage__header'>
                 <Typography variant='h5'>
                     {albumName}
@@ -66,7 +68,7 @@ function AlbumPage() {
                 }
             </div>
 
-
+            {/* confirmation for delete album */}
             <Dialog
                 open={open}
                 onClose={closeDeleteModal}

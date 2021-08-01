@@ -1,10 +1,11 @@
+import { useCallback } from 'react'
 import { Tooltip } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import GetAppIcon from '@material-ui/icons/GetApp'
+import debounce from 'lodash.debounce'
+
 import useFireStore from '../hooks/useFirestore'
 import '../css/Photo.css'
-import debounce from 'lodash.debounce'
-import { useCallback } from 'react'
 
 function Photo({ id, data }) {
 
@@ -17,6 +18,7 @@ function Photo({ id, data }) {
             deletePhoto(id, `${id}_${data.name}`)
         }, 1000), [],
     )
+
     function handleDeletePhoto() {
         // Even though handleChange is created on each render and executed
         // it references the same debounceDelete that was created initially

@@ -1,27 +1,27 @@
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import React, { useEffect, useState } from 'react'
-import CreateAlbumModal from '../components/CreateAlbumModal'
-import "../css/HomePage.css"
+
+import { CreateAlbumModal, Album, Photo } from '../components'
 import useFireStore from '../hooks/useFirestore'
 import { setCurrentAlbum } from '../actions'
-import Album from '../components/Album'
-import Photo from '../components/Photo'
+import "../css/HomePage.css"
 
-import { useDispatch, useSelector } from 'react-redux'
+
 function HomePage() {
+    const [albums, setAlbums] = useState([])
+    const [images, setImages] = useState([])
 
     //React Redux dispatch
     const dispatch = useDispatch()
     const { albumName } = useSelector(state => state.album)
-
     const { getAlbums, getAlbumPhotos } = useFireStore()
     const [isCreateAlbumOpen, setIsCreateAlbumOpen] = useState(false)
 
-    const [albums, setAlbums] = useState([])
-    const [images, setImages] = useState([])
 
 
+    //Utility functions to open the createAlbum Model.
     const handleCreateAlbum = () => {
         setIsCreateAlbumOpen(true)
     }

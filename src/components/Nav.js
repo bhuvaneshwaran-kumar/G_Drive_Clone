@@ -1,26 +1,27 @@
-import React from 'react'
-import '../css/Nav.css'
+import { useRef, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import {
     Avatar, Button, IconButton, Snackbar, Tooltip, Typography
 } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import PublishIcon from '@material-ui/icons/Publish'
+
 import { auth } from '../firebaseConfig'
-import { useRef, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import useFirestore from '../hooks/useFirestore'
+import '../css/Nav.css'
+
 function Nav() {
-    const { uploadImages } = useFirestore()
-    const user = useSelector((state) => state.user)
     const fileRef = useRef()
     const history = useHistory()
     const [uploadMessage, setUploadMessage] = useState(null)
+    const user = useSelector((state) => state.user)
 
+
+    const { uploadImages } = useFirestore()
 
     //Log's Out the User.
     const logOut = () => auth.signOut().catch(err => alert(err))
-
 
     //handle's image upload's and some validation.
     const handleUploadImage = () => {
