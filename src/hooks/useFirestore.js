@@ -73,8 +73,17 @@ function useFireStore() {
 
     }
 
+    const deletePhoto = (id, fileName) => {
+        storage
+            .ref('photos')
+            .child(fileName)
+            .delete()
+            .then(() => db.collection('photos').doc(id).delete())
+            .catch(err => alert(err.message))
+    }
+
     return {
-        createAlbum, getAlbums, uploadImages, getAlbumPhotos
+        createAlbum, getAlbums, uploadImages, getAlbumPhotos, deletePhoto
     }
 
 }
