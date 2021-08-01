@@ -26,7 +26,7 @@ function Photo({ id, data }) {
     }
 
     const handleDownloadPhoto = async () => {
-        // This can be downloaded directly:
+        // You need to enable the cors in GCP (Read Notes from README)
         let xhr = new XMLHttpRequest()
         xhr.responseType = "blob"
         xhr.onload = (event) => {

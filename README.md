@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# G_Drive_Clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A Cloud Storage clone built with ReactJS❄ and Firebase🔥.
 
-## Available Scripts
+### Features
 
-In the project directory, you can run:
+- Login With Goolgle.
+- Upload Multiple photo at once.
+- Create new Album
+- delete Photos and Albums.
+- Download Photos
 
-### `npm start`
+### Technology used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **ReactJS** (FrontEnd)
+  - **Material-UI**
+  - **react-router-dom**
+  - **redux**
+  - **lodash.debounce**
+- **FireBase** - BaaS (BackEnd as a Service)
+  - **FireStore**
+  - **Cloud Storage**
+  - **Authentication**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### To run this on Local Machine
 
-### `npm test`
+- Clone this repo, and cd into it.
+- install all the dependencies form package.json.
+- Create a project in Firebase Console.
+- Enable Goolgle Login.
+- intergrate your secret project key with your local environment.
+- Run app by typing `npm start` in command line.
+- Make sure to read the **Note** section below.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Note that
 
-### `npm run build`
+- All the function which does the database transition are created in a coustom Hook and imported into the component.
+  Check `src\hooks\useFireStore.js`
+- You will have to create **Indexes** in firestore, as HomePage and AlbumPage uses **Compound Queries** to fetch data from firestore. While running the application for first time there will be an error in console stating you to create an Index in Firestore. That Error will provide a link to create an Index in Firestore , you can click on the link and create an Index. (This Error will be solved after that particular Index is created)
+- To downlaod photo directly from firebase Storage in JS a **Blob** type, you have to enable **CORS** policy in **Google Cloud Platform**, to know more check the below links.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  - [Firebase Docs](https://firebase.google.com/docs/storage/web/download-files)
+  - [StackOverFlow Answers](https://stackoverflow.com/questions/37760695/firebase-storage-and-access-control-allow-origin)
