@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, IconButton } from '@material-ui/core'
+import { Typography, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, IconButton, Button } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
@@ -10,10 +10,10 @@ import '../css/HomePage.css'
 function AlbumPage() {
     const history = useHistory()
     const { albumName } = useSelector((state) => state.album)
+    const [open, setOpen] = useState(false)
 
 
-
-    const { getAlbumPhotos } = useFireStore()
+    const { getAlbumPhotos, deleteAlbum } = useFireStore()
 
     const [images, setImages] = useState([])
 
@@ -36,6 +36,15 @@ function AlbumPage() {
         }
     }, [])
 
+    const closeDeleteModal = () => setOpen(false)
+    const openDeleteModal = () => setOpen(true)
+
+    const handleDeleteAlbum = () => {
+        console.log('deleting Album Photos...')
+        deleteAlbum(images)
+        closeDeleteModal()
+        history.replace('/')
+    }
 
     return (
         <div className='albumpage'>
@@ -43,7 +52,7 @@ function AlbumPage() {
                 <Typography variant='h5'>
                     {albumName}
                 </Typography>
-                <IconButton>
+                <IconButton onClick={openDeleteModal}>
                     <DeleteIcon />
                 </IconButton>
             </div>
@@ -57,6 +66,29 @@ function AlbumPage() {
                 }
             </div>
 
+
+            <Dialog
+                open={open}
+                onClose={closeDeleteModal}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">Album Delete Confirmation</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Deleting the Album will also delete the Photos inside it...
+                        Do you want to delete this Album ?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeDeleteModal} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleDeleteAlbum} color="primary" autoFocus variant="contained">
+                        delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
 
         </div>
